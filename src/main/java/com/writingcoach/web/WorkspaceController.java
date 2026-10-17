@@ -1,5 +1,7 @@
 package com.writingcoach.web;
 
+import com.writingcoach.domain.Document;
+import com.writingcoach.service.DocumentService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WorkspaceController {
 
-    private static final String ASSIGNMENT_TITLE = "短视频使用与大学生注意力恢复的关系研究";
+    private final DocumentService documentService;
+
+    public WorkspaceController(DocumentService documentService) {
+        this.documentService = documentService;
+    }
 
     /**
      * 打开写作工作台。根路径与 {@code /workspace} 指向同一页面，方便直接访问。
@@ -23,7 +29,10 @@ public class WorkspaceController {
      */
     @GetMapping({"/", "/workspace"})
     public String workspace(Model model) {
-        model.addAttribute("assignmentTitle", ASSIGNMENT_TITLE);
+        Document document = documentService.requireDocument(DocumentService.DEMO_DOCUMENT_ID);
+        model.addAttribute("document", document);
+        model.addAttribute("versionCount", documentService.countVersions(document.getId()));
+        model.addAttribute("assignmentTitle", document.getTitle());
         model.addAttribute("courseName", "传播学方法课");
         model.addAttribute("dueDate", "10 月 30 日");
         model.addAttribute("outline", List.of(

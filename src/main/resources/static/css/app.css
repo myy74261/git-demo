@@ -395,6 +395,47 @@ button {
   font-size: 11px;
 }
 
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.toolbar-button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 11px;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.toolbar-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.toolbar-button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
 .editor-head {
   flex: 0 0 auto;
   padding: 26px 38px 8px;
@@ -464,6 +505,14 @@ button {
 .save-state {
   color: var(--accent);
   font-size: 11px;
+}
+
+.save-state.is-error {
+  color: #a33b3b;
+}
+
+.save-state.is-warn {
+  color: var(--warn);
 }
 
 /* ---------- 引导 ---------- */
@@ -643,6 +692,265 @@ button {
   color: var(--muted);
   font-size: 10px;
   line-height: 1.6;
+}
+
+/* ---------- 版本历史 ---------- */
+
+.version-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(27, 31, 26, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.version-scrim.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.version-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  width: min(470px, 94vw);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: -20px 0 60px rgba(31, 36, 31, 0.16);
+  transform: translateX(102%);
+  transition: transform 0.24s ease;
+}
+
+.version-drawer.is-open {
+  transform: translateX(0);
+}
+
+.drawer-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-heading h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.drawer-close {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.drawer-body {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 18px 24px;
+  overflow-y: auto;
+}
+
+.drawer-hint {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.version-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.version-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fffefb;
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.version-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.version-badge {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.version-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.version-main strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.version-main small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.version-chevron {
+  color: var(--line-strong);
+  font-size: 18px;
+}
+
+.drawer-empty {
+  margin: 0;
+  padding: 24px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.back-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.detail-head h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.detail-meta {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.detail-restore {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 12px;
+}
+
+.diff-caption {
+  margin: 16px 0 6px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.diff-view {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  overflow: auto;
+  max-height: 46vh;
+}
+
+.diff-line {
+  display: flex;
+  gap: 8px;
+  padding: 2px 10px;
+  color: var(--ink-soft);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.diff-line .marker {
+  flex: 0 0 12px;
+  color: var(--muted);
+  user-select: none;
+}
+
+.diff-line.is-add {
+  background: #eaf5ec;
+  color: #24513f;
+}
+
+.diff-line.is-remove {
+  background: #fbeceb;
+  color: #8a3030;
+}
+
+.diff-line.is-hunk {
+  background: var(--surface-muted);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(86px + env(safe-area-inset-bottom));
+  z-index: 90;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(31, 36, 31, 0.92);
+  color: #fff;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 /* ---------- 移动端导航与遮罩 ---------- */
@@ -832,6 +1140,28 @@ button {
     min-height: 44px;
     font-size: 12px;
   }
+
+  .word-target {
+    display: none;
+  }
+
+  .version-drawer {
+    width: 100%;
+    max-width: none;
+    border-left: 0;
+  }
+
+  .drawer-head {
+    padding-top: calc(18px + env(safe-area-inset-top));
+  }
+
+  .drawer-body {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .diff-view {
+    max-height: 42vh;
+  }
 }
 
 @media (max-width: 420px) {
@@ -845,6 +1175,23 @@ button {
 
   .guide-head h2 {
     font-size: 17px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sample-chip {
+    display: none;
+  }
+
+  .toolbar-button {
+    padding: 0 8px;
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 900px) {
+  .toast {
+    bottom: 28px;
   }
 }
 

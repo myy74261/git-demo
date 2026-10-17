@@ -8,7 +8,8 @@
   <title th:text="${assignmentTitle} + ' · 执笔'">执笔 · 学术写作教练</title>
   <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body data-view="write">
+<body data-view="write"
+      th:attr="data-document-id=${document.id},data-revision=${document.revision},data-version-count=${versionCount}">
   <header class="topbar">
     <button class="icon-button outline-toggle" id="outlineToggle" type="button"
             aria-label="打开作业大纲" aria-expanded="false" aria-controls="outlinePanel">
@@ -88,15 +89,23 @@
           <span>草稿</span>
           <span class="sample-chip">示例内容，可直接改写</span>
         </div>
-        <span class="word-target">目标 3,000 字</span>
+        <div class="toolbar-actions">
+          <span class="word-target">目标 3,000 字</span>
+          <button class="toolbar-button" id="saveVersionButton" type="button">存为版本</button>
+          <button class="toolbar-button" id="versionButton" type="button">
+            版本历史 <span class="toolbar-count" id="versionCount">0</span>
+          </button>
+        </div>
       </div>
 
       <div class="editor-head">
         <textarea class="title-input" id="titleInput" rows="1"
-                  aria-label="文档标题">短视频使用与大学生注意力恢复的关系研究</textarea>
+                  aria-label="文档标题"
+                  th:text="${document.title}">短视频使用与大学生注意力恢复的关系研究</textarea>
       </div>
 
-      <textarea class="editor" id="editor" spellcheck="false" aria-label="论文正文">摘要
+      <textarea class="editor" id="editor" spellcheck="false" aria-label="论文正文"
+                th:text="${document.content}">摘要
 
 本研究探讨短视频使用强度与大学生注意力恢复之间的关系。通过对在校学生进行问卷调查，研究发现短视频使用强度与注意力恢复水平之间存在显著相关。这一结果说明短视频使用对注意力恢复具有重要影响。
 
@@ -148,7 +157,7 @@
         </article>
       </div>
 
-      <p class="guide-foot">第 1 阶段为静态示例，规则引擎将在下一阶段接入。</p>
+      <p class="guide-foot">当前为示例卡片，规则引擎将在下一阶段接入。</p>
     </aside>
 
     <div class="scrim" id="scrim" aria-hidden="true"></div>
@@ -179,6 +188,45 @@
       <span class="nav-badge" id="navBadge">1</span>
     </button>
   </nav>
+
+  <div class="version-scrim" id="versionScrim" aria-hidden="true"></div>
+
+  <aside class="version-drawer" id="versionDrawer" data-mode="list" aria-hidden="true"
+         aria-label="版本历史" inert>
+    <header class="drawer-head">
+      <div class="drawer-heading">
+        <p class="eyebrow">写作过程</p>
+        <h2>版本历史</h2>
+      </div>
+      <button class="drawer-close" id="versionClose" type="button" aria-label="关闭版本历史">×</button>
+    </header>
+
+    <div class="drawer-body">
+      <div class="version-list-wrap" id="versionListWrap">
+        <p class="drawer-hint">每次保存版本都会保留完整正文，可随时回看或恢复。</p>
+        <ul class="version-list" id="versionList"></ul>
+        <p class="drawer-empty" id="versionEmpty" hidden>
+          还没有版本记录，点击“存为版本”创建第一条。
+        </p>
+      </div>
+
+      <section class="version-detail" id="versionDetail" hidden aria-label="版本详情">
+        <button class="back-button" id="versionBack" type="button">← 返回版本列表</button>
+        <div class="detail-head">
+          <div>
+            <h3 id="detailTitle">版本 1</h3>
+            <p class="detail-meta" id="detailMeta"></p>
+          </div>
+          <button class="button button-primary detail-restore" id="restoreButton"
+                  type="button">恢复此版本</button>
+        </div>
+        <p class="diff-caption">与当前稿对比</p>
+        <div class="diff-view" id="diffView"></div>
+      </section>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script th:src="@{/js/workspace.js}" defer></script>
 </body>
