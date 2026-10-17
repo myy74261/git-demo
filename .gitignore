@@ -1,0 +1,28 @@
+# 构建产物
+target/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+!.vscode/launch.json
+!.vscode/settings.json
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 本地运行数据与密钥
+*.mv.db
+*.trace.db
+/data/
+.env
+.env.local
+application-local.yml
+application-local.properties
+
+# 日志
+*.log
+logs/

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: writing-coach
+  datasource:
+    url: jdbc:h2:file:./data/writing-coach
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      cache:
+        period: 0
+
+server:
+  port: 8080
+  # 绑定全部网卡，手机与电脑在同一局域网时可直接访问。
+  address: 0.0.0.0
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+logging:
+  level:
+    org.hibernate.SQL: warn

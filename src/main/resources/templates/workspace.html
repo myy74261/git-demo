@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="执笔：在写作过程中给出可执行建议的学术写作教练">
+  <title th:text="${assignmentTitle} + ' · 执笔'">执笔 · 学术写作教练</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body data-view="write">
+  <header class="topbar">
+    <button class="icon-button outline-toggle" id="outlineToggle" type="button"
+            aria-label="打开作业大纲" aria-expanded="false" aria-controls="outlinePanel">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <a class="brand" th:href="@{/workspace}" aria-label="执笔首页">
+      <span class="brand-mark" aria-hidden="true">执</span>
+      <span class="brand-text">
+        <strong>执笔</strong>
+        <small>学术写作教练</small>
+      </span>
+    </a>
+
+    <div class="doc-context">
+      <span class="doc-name" th:text="${assignmentTitle}">短视频使用与大学生注意力恢复的关系研究</span>
+      <span class="doc-sub">
+        <span th:text="${courseName}">传播学方法课</span>
+        <span aria-hidden="true">·</span>
+        <span th:text="${dueDate} + ' 截止'">10 月 30 日 截止</span>
+      </span>
+    </div>
+
+    <div class="topbar-actions">
+      <span class="privacy-chip">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v9H6z" fill="none" stroke="currentColor"
+                stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+        仅你可见
+      </span>
+      <button class="avatar" type="button" aria-label="个人中心">林</button>
+    </div>
+  </header>
+
+  <div class="workspace" id="workspace">
+    <aside class="panel outline-panel" id="outlinePanel" aria-label="作业大纲">
+      <div class="panel-head">
+        <p class="eyebrow">课程作业</p>
+        <h1 class="assignment-title" th:text="${assignmentTitle}">短视频使用与大学生注意力恢复的关系研究</h1>
+        <p class="assignment-meta">3,000 字 · 调查报告</p>
+      </div>
+
+      <section class="outline-section">
+        <h2 class="section-title">作业要求</h2>
+        <ul class="requirement-list">
+          <li>包含研究问题、研究方法与讨论</li>
+          <li>至少引用 5 篇近五年文献</li>
+          <li>附调查数据，并说明样本来源</li>
+        </ul>
+      </section>
+
+      <section class="outline-section">
+        <h2 class="section-title">结构</h2>
+        <ol class="outline-list">
+          <li class="outline-item" th:each="item, stat : ${outline}">
+            <span class="outline-index" th:text="${stat.count}">1</span>
+            <span class="outline-title" th:text="${item.title}">摘要</span>
+            <span class="outline-hint" th:text="${item.hint}">150–200 字</span>
+          </li>
+        </ol>
+      </section>
+
+      <div class="outline-tip">
+        <span class="tip-label">写作提醒</span>
+        <p>先把方法和数据写实，再回头润色表达。证据比措辞更能撑住结论。</p>
+      </div>
+    </aside>
+
+    <section class="panel editor-panel" aria-label="写作区">
+      <div class="editor-toolbar">
+        <div class="editor-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>草稿</span>
+          <span class="sample-chip">示例内容，可直接改写</span>
+        </div>
+        <span class="word-target">目标 3,000 字</span>
+      </div>
+
+      <div class="editor-head">
+        <textarea class="title-input" id="titleInput" rows="1"
+                  aria-label="文档标题">短视频使用与大学生注意力恢复的关系研究</textarea>
+      </div>
+
+      <textarea class="editor" id="editor" spellcheck="false" aria-label="论文正文">摘要
+
+本研究探讨短视频使用强度与大学生注意力恢复之间的关系。通过对在校学生进行问卷调查，研究发现短视频使用强度与注意力恢复水平之间存在显著相关。这一结果说明短视频使用对注意力恢复具有重要影响。
+
+一、问题提出
+
+随着移动互联网的普及，短视频已经成为大学生日常生活中的重要组成部分。已有研究表明，短视频使用会影响个体的注意力水平，但关于其恢复机制的研究仍然不足。因此，本研究拟从注意力恢复理论出发，考察短视频使用强度与注意力恢复之间的关系。
+
+二、研究方法
+
+本研究采用问卷调查法，以某高校在校本科生为研究对象。问卷包括短视频使用强度量表、注意力恢复量表和基本信息三部分。数据收集完成后，使用统计软件进行分析。</textarea>
+
+      <footer class="editor-foot">
+        <div class="counts">
+          <span><strong id="charCount">0</strong> 字</span>
+          <span class="count-divider" aria-hidden="true">/</span>
+          <span><strong id="paraCount">0</strong> 段</span>
+        </div>
+        <span class="save-state" id="saveState" aria-live="polite">已保存到本机</span>
+      </footer>
+    </section>
+
+    <aside class="panel guide-panel" id="guidePanel" aria-label="写作引导">
+      <div class="guide-head">
+        <div>
+          <p class="eyebrow">写作引导</p>
+          <h2>把结论写扎实</h2>
+          <p class="guide-sub">根据你正在写的内容给建议，不做 AI 判定。</p>
+        </div>
+        <span class="guide-count" id="guideCount" aria-label="1 条建议">1</span>
+      </div>
+
+      <div class="guide-list" id="guideList">
+        <article class="guide-card" data-guide-card>
+          <div class="card-meta">
+            <span class="card-tag">证据密度</span>
+            <span class="card-flag">示例</span>
+          </div>
+          <h3>这个结论还缺一组数据</h3>
+          <blockquote>这一结果说明短视频使用对注意力恢复具有重要影响。</blockquote>
+          <p class="card-reason">句子里有结论，但没有样本量、效应量或引用支撑。答辩时容易被追问“影响到底有多大”。</p>
+          <div class="card-suggestion">
+            <span class="suggestion-label">可以这样补</span>
+            <p>在 N=___ 名学生中，短视频使用强度与注意力恢复的相关系数为 r=___（p=___）。</p>
+          </div>
+          <div class="card-actions">
+            <button class="button button-primary" type="button" data-action="resolved">已修改</button>
+            <button class="button button-ghost" type="button" data-action="kept">保留原句</button>
+          </div>
+        </article>
+      </div>
+
+      <p class="guide-foot">第 1 阶段为静态示例，规则引擎将在下一阶段接入。</p>
+    </aside>
+
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="移动端工作区导航">
+    <button class="nav-item" type="button" data-target="outline" aria-selected="false">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M5 6h14M5 12h14M5 18h9" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>大纲</span>
+    </button>
+    <button class="nav-item is-active" type="button" data-target="write" aria-selected="true">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M4 20h4L19 9a2.1 2.1 0 0 0-3-3L5 17v3z" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <span>写作</span>
+    </button>
+    <button class="nav-item" type="button" data-target="guide" aria-selected="false">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M12 3a6 6 0 0 0-3.5 10.9V17h7v-3.1A6 6 0 0 0 12 3zM9.5 20h5"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+      <span>引导</span>
+      <span class="nav-badge" id="navBadge">1</span>
+    </button>
+  </nav>
+
+  <script th:src="@{/js/workspace.js}" defer></script>
+</body>
+</html>
